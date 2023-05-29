@@ -3,7 +3,7 @@
     <ElementFields>
         <Name Editor="hide" Type="string">eCommerce</Name>
         <DisplayName Editor="hide" Type="string"/>
-        <Version Editor="hide" Type="number">1</Version>
+        <Version Editor="hide" Type="string">1</Version>
         <Keywords Editor="hide" Type="string"/>
         <Tooltip Editor="hide" Type="string"/>
         <IncomingConnections Editor="hide">No</IncomingConnections>
@@ -28,7 +28,9 @@
         <SwitchModule Editor="hide" Type="string"/>
         <ObsoleteProperties Editor="hide" Type="string"/>
         <ObsoleteConnectionProperties Editor="hide" Type="string"/>
-        <api_token Default="efbe8d2c48ab963ca859855026c327dc8e968f02" DetailedInfo="" Editor="inline;sltextwithvar;scriptexp" LocalizedTagName="API Token" Subtype="inline" Tooltip="" Type="string" UserDefined="true" Validation="Standard">efbe8d2c48ab963ca859855026c327dc8e968f02</api_token>
+        <api_token Default="" DetailedInfo="" Editor="inline;sltextwithvar;scriptexp" LocalizedTagName="API Token" Subtype="inline" Tooltip="" Type="string" UserDefined="true" Validation="Standard"></api_token>
+        <uri Default="" DetailedInfo="" Editor="inline;sltextwithvar;scriptexp" LocalizedTagName="Endpoint Path" Subtype="inline" Tooltip="" Type="string" UserDefined="true" Validation="Standard"></uri>
+        <datasetName Default="" DetailedInfo="" Editor="inline;sltextwithvar;scriptexp" LocalizedTagName="Dataset Name" Subtype="inline" Tooltip="" Type="string" UserDefined="true" Validation="Standard"></datasetName>
     </ElementFields>
     <ConnectionFields/>
     <ExtraProperties/>

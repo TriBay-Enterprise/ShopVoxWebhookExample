@@ -1,11 +1,11 @@
 
 <Manifest>
     <ScripterInstanceName>eCommerce</ScripterInstanceName>
-    <SwitchVersion>21.1</SwitchVersion>
+    <SwitchVersion>22.1</SwitchVersion>
     <ScriptPackageFormatVersion>1.0</ScriptPackageFormatVersion>
     <ScriptPasswordProtected>No</ScriptPasswordProtected>
     <ScriptPackageType>Script</ScriptPackageType>
-    <ScriptDeclarationFile>eCommerce.xml</ScriptDeclarationFile>
+    <ScriptDeclarationFile>ShopVoxWebhookExample.xml</ScriptDeclarationFile>
     <ScriptProgramFiles>
         <ScriptProgramFile ScriptLanguage="NodeJSScript">main.ts</ScriptProgramFile>
     </ScriptProgramFiles>
