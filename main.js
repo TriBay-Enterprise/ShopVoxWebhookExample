@@ -55,7 +55,7 @@ async function flowStartTriggered(s, flowElement) {
 async function httpRequestTriggeredSync(request, args, response, s) {
     let eCommerceData = request.getBodyAsString();
     let eCommerceParse = JSON.parse(eCommerceData);
-    let jobID = eCommerceParse.id.toString();
+    let jobID = eCommerceParse.event.id;
     let processedIDS = {};
     let idsFromGlobalData = await s.getGlobalData(Scope.FlowElement, "uuids");
     if (idsFromGlobalData !== "") {
@@ -72,8 +72,6 @@ async function httpRequestTriggeredSync(request, args, response, s) {
         response.setHeader('Content-Type', 'application/json');
         response.setHeader('api_token', args[0]);
         response.setBody(Buffer.from(JSON.stringify({ "result": "success", "orderID": jobID, "api_token": args[0] })));
-        processedIDS[jobID] = { arrival: new Date().getTime(), name: eCommerceParse.name };
-        await s.setGlobalData(Scope.FlowElement, 'uuids', JSON.stringify(processedIDS));
     }
 }
 /**
@@ -85,9 +83,9 @@ async function httpRequestTriggeredSync(request, args, response, s) {
  */
 async function httpRequestTriggeredAsync(request, args, s, flowElement) {
     //Parse JSON from Body
-    await flowElement.log(LogLevel.Debug, 'Webhook triggered!');
     let data = request.getBodyAsString();
     var dataParsed = JSON.parse(data);
+    await flowElement.log(LogLevel.Debug, `Webhook triggered for job ${dataParsed.event.id}.`);
     //Define Dataset
     let tmpDatasetFile = tmp.fileSync({ postfix: ".json" }).name;
     let datasetName = await flowElement.getPropertyStringValue('datasetName');
@@ -95,7 +93,7 @@ async function httpRequestTriggeredAsync(request, args, s, flowElement) {
     //Create job containing the production file and define dataset
     let job = await flowElement.createJob(tmpDatasetFile);
     await job.createDataset(datasetName, tmpDatasetFile, DatasetModel.JSON);
-    await job.sendToSingle(dataParsed.id + '.json');
+    await job.sendToSingle(dataParsed.event.id + '.json');
     fs.unlinkSync(tmpDatasetFile);
 }
 //# sourceMappingURL=main.js.map
