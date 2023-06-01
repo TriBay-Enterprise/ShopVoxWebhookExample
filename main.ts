@@ -13,12 +13,14 @@ async function jobArrived(s: Switch, flowElement: FlowElement, job: Job) {
  async function flowStartTriggered(s: Switch, flowElement: FlowElement) {
     let api_token = await flowElement.getPropertyStringValue("api_token") as string;
     let webhookPath = await flowElement.getPropertyStringValue("uri") as string;
+    await flowElement.log(LogLevel.Info, "Attempting to subscribe to /scripting" + webhookPath);
     try {
       await s.httpRequestSubscribe(HttpRequest.Method.POST, webhookPath, [api_token]);
+      await flowElement.log(LogLevel.Info, "Subscription was successful");
     } catch (error) {
-      flowElement.failProcess("Failed to subscribe to the request %1", error.message);
+      await flowElement.log(LogLevel.Error, "Subscription failed!");
     }
-    await flowElement.log(LogLevel.Info, "Subscription started on /scripting" + webhookPath);
+    
   }
 
   /**
@@ -42,7 +44,7 @@ async function httpRequestTriggeredSync(request: HttpRequest, args: any[], respo
       response.setStatusCode(418);
       response.setHeader('Content-Type', 'application/json');
       response.setHeader('api_token', args[0]);
-      response.setBody(Buffer.from(JSON.stringify({"result":"error","message": "eCommerce order with UUID " + jobID + " already exists","api_token": args[0]})));
+      response.setBody(Buffer.from(JSON.stringify({"result":"error","message": "Job with ID " + jobID + " already exists","api_token": args[0]})));
     } else {
       response.setStatusCode(200);
       response.setHeader('Content-Type', 'application/json');

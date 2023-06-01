@@ -36,13 +36,14 @@ async function jobArrived(s, flowElement, job) {
 async function flowStartTriggered(s, flowElement) {
     let api_token = await flowElement.getPropertyStringValue("api_token");
     let webhookPath = await flowElement.getPropertyStringValue("uri");
+    await flowElement.log(LogLevel.Info, "Attempting to subscribe to /scripting" + webhookPath);
     try {
         await s.httpRequestSubscribe(HttpRequest.Method.POST, webhookPath, [api_token]);
+        await flowElement.log(LogLevel.Info, "Subscription was successful");
     }
     catch (error) {
-        flowElement.failProcess("Failed to subscribe to the request %1", error.message);
+        await flowElement.log(LogLevel.Error, "Subscription failed!");
     }
-    await flowElement.log(LogLevel.Info, "Subscription started on /scripting" + webhookPath);
 }
 /**
 * Sends back the initial response, the response will be different if the uuid already exists in global data.
