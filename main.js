@@ -65,7 +65,7 @@ async function httpRequestTriggeredSync(request, args, response, s) {
         response.setStatusCode(418);
         response.setHeader('Content-Type', 'application/json');
         response.setHeader('api_token', args[0]);
-        response.setBody(Buffer.from(JSON.stringify({ "result": "error", "message": "eCommerce order with UUID " + jobID + " already exists", "api_token": args[0] })));
+        response.setBody(Buffer.from(JSON.stringify({ "result": "error", "message": "Job with ID " + jobID + " already exists", "api_token": args[0] })));
     }
     else {
         response.setStatusCode(200);
