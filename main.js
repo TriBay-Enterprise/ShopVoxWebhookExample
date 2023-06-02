@@ -43,6 +43,7 @@ async function flowStartTriggered(s, flowElement) {
     }
     catch (error) {
         await flowElement.log(LogLevel.Error, "Subscription failed!");
+        await flowElement.log(LogLevel.Error, error.stack);
     }
 }
 /**
@@ -84,7 +85,7 @@ async function httpRequestTriggeredSync(request, args, response, s) {
 async function httpRequestTriggeredAsync(request, args, s, flowElement) {
     //Parse JSON from Body
     let data = request.getBodyAsString();
-    var dataParsed = JSON.parse(data);
+    let dataParsed = JSON.parse(data);
     await flowElement.log(LogLevel.Debug, `Webhook triggered for job ${dataParsed.event.id}.`);
     //Define Dataset
     let tmpDatasetFile = tmp.fileSync({ postfix: ".json" }).name;

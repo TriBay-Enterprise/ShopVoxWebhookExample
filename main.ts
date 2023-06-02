@@ -19,8 +19,8 @@ async function jobArrived(s: Switch, flowElement: FlowElement, job: Job) {
       await flowElement.log(LogLevel.Info, "Subscription was successful");
     } catch (error) {
       await flowElement.log(LogLevel.Error, "Subscription failed!");
+      await flowElement.log(LogLevel.Error, error.stack);
     }
-    
   }
 
   /**
@@ -32,12 +32,12 @@ async function jobArrived(s: Switch, flowElement: FlowElement, job: Job) {
  */
 async function httpRequestTriggeredSync(request: HttpRequest, args: any[], response: HttpResponse, s: Switch) {
   let eCommerceData = request.getBodyAsString();
-  let eCommerceParse = JSON.parse(eCommerceData)
+  let eCommerceParse = JSON.parse(eCommerceData);
   let jobID = eCommerceParse.event.id;
   let processedIDS: Record<string, any> = {}
-  let idsFromGlobalData = await s.getGlobalData(Scope.FlowElement, "uuids")
+  let idsFromGlobalData = await s.getGlobalData(Scope.FlowElement, "uuids");
   if (idsFromGlobalData !== "") {
-    processedIDS = JSON.parse(idsFromGlobalData)
+    processedIDS = JSON.parse(idsFromGlobalData);
   }
   
   if (jobID in processedIDS == true) {
@@ -63,7 +63,7 @@ async function httpRequestTriggeredSync(request: HttpRequest, args: any[], respo
  async function httpRequestTriggeredAsync(request: HttpRequest, args: any[], s: Switch, flowElement: FlowElement) {
   //Parse JSON from Body
   let data = request.getBodyAsString();
-  var dataParsed = JSON.parse(data);
+  let dataParsed = JSON.parse(data);
   await flowElement.log(LogLevel.Debug,`Webhook triggered for job ${dataParsed.event.id}.`);
   
   //Define Dataset
