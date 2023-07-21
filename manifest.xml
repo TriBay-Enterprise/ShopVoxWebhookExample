@@ -9,6 +9,6 @@
     <ScriptProgramFiles>
         <ScriptProgramFile ScriptLanguage="NodeJSScript">main.ts</ScriptProgramFile>
     </ScriptProgramFiles>
-    <ScriptIconFile>eCommerce.png</ScriptIconFile>
+    <ScriptIconFile>shopvoxlogo.png</ScriptIconFile>
     <LocalizationItems/>
 </Manifest>
