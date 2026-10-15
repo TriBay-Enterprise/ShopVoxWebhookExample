@@ -34,6 +34,7 @@ async function jobArrived(s, flowElement, job) {
  * @param flowElement
  */
 async function flowStartTriggered(s, flowElement) {
+    var _a;
     let api_token = await flowElement.getPropertyStringValue("api_token");
     let webhookPath = await flowElement.getPropertyStringValue("uri");
     await flowElement.log(LogLevel.Info, "Attempting to subscribe to /scripting" + webhookPath);
@@ -43,7 +44,7 @@ async function flowStartTriggered(s, flowElement) {
     }
     catch (error) {
         await flowElement.log(LogLevel.Error, "Subscription failed!");
-        await flowElement.log(LogLevel.Error, error.stack);
+        await flowElement.log(LogLevel.Error, error instanceof Error ? (_a = error.stack) !== null && _a !== void 0 ? _a : error.message : String(error));
     }
 }
 /**
@@ -66,13 +67,13 @@ async function httpRequestTriggeredSync(request, args, response, s) {
         response.setStatusCode(418);
         response.setHeader('Content-Type', 'application/json');
         response.setHeader('api_token', args[0]);
-        response.setBody(Buffer.from(JSON.stringify({ "result": "error", "message": "Job with ID " + jobID + " already exists", "api_token": args[0] })));
+        response.setBody(JSON.stringify({ "result": "error", "message": "Job with ID " + jobID + " already exists", "api_token": args[0] }));
     }
     else {
         response.setStatusCode(200);
         response.setHeader('Content-Type', 'application/json');
         response.setHeader('api_token', args[0]);
-        response.setBody(Buffer.from(JSON.stringify({ "result": "success", "orderID": jobID, "api_token": args[0] })));
+        response.setBody(JSON.stringify({ "result": "success", "orderID": jobID, "api_token": args[0] }));
     }
 }
 /**
@@ -97,4 +98,3 @@ async function httpRequestTriggeredAsync(request, args, s, flowElement) {
     await job.sendToSingle(dataParsed.event.id + '.json');
     fs.unlinkSync(tmpDatasetFile);
 }
-//# sourceMappingURL=main.js.map

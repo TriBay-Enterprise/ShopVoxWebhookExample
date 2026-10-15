@@ -17,3 +17,6 @@ test/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# switch-scripting-context (AI context docs — re-generate with npx switch-scripting-context init)
+docs-for-agents/
